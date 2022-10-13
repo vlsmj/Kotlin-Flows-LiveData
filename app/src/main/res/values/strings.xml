@@ -2,4 +2,9 @@
     <string name="app_name">KotlinFlowsLiveData</string>
     <string name="start_state_flow">Start State Flow</string>
     <string name="stateflow">StateFlow:</string>
+    <string name="sharedflow">SharedFlow:</string>
+    <string name="start_shared_flow">Start Shared Flow</string>
+    <string name="flow">Flow:</string>
+    <string name="livedata">LiveData:</string>
+    <string name="start_live_data">Start Live Data</string>
 </resources>

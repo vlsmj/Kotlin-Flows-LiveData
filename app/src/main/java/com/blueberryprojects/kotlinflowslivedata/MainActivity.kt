@@ -21,18 +21,52 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.liveData.observe(this) {
+            val liveData = "LiveData: $it"
+
+            binding.txtLiveData.text = liveData
+        }
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.stateFlow.collectLatest {
-                    val stateFlow = "StateFlow: $it"
+                launch {
+                    viewModel.stateFlow.collectLatest {
+                        val stateFlow = "StateFlow: $it"
 
-                    binding.txtStateFlow.text = stateFlow
+                        binding.txtStateFlow.text = stateFlow
+                    }
+                }
+
+                launch {
+                    viewModel.sharedFlow.collectLatest {
+                        val sharedFlow = "SharedFlow: $it"
+
+                        binding.txtSharedFlow.text = sharedFlow
+                    }
                 }
             }
         }
 
+        binding.btnStartLiveData.setOnClickListener {
+            viewModel.startLiveData()
+        }
+
         binding.btnStartStateFlow.setOnClickListener {
             viewModel.startStateFlow()
+        }
+
+        binding.btnStartSharedFlow.setOnClickListener {
+            viewModel.startSharedFlow()
+        }
+
+        binding.btnStartFlow.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.startFlow().collectLatest {
+                    val flow = "Flow: $it"
+
+                    binding.txtFlow.text = flow
+                }
+            }
         }
     }
 }
